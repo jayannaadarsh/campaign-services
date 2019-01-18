@@ -1,0 +1,52 @@
+{
+  "advertiserId": "5b714c10b7e2bf0001d11801",
+  "agencyId": "5b716f41f073c700012cc4e3",
+  "name": "Call based Rich notification",
+  "campaignCategoryId": "5a0c3afbc1691b3cf7009d4a",
+  "audienceClusters": "{\"condition\":\"ANY\",\"list\":[{\"operation\":\"INCLUDE\",\"condition\":\"ALL\",\"list\":[{\"id\":\"5c0a4561b6c22a000118c059\"}]}]}",
+  "campaignObjectiveId": "5a0a8aa22bdceb1076ce6b4c",
+  "adContentType": "RICH_NOTIFICATION",
+  "targetSDKVersion": "2.9.0",
+  "notification": {
+    "goToWeb": "",
+    "packageNameToInstallApp": "",
+    "packageNameToOpenApp": "",
+    "phoneToCall": "+456871254485",
+    "message": "please read this and understand",
+    "subject": "This is standard tect",
+    "notificationType": "STANDARD_TEXT",
+    "richNotificationActionButtonText": "click to read more",
+    "richNotificationMessageBody": "hi hello world",
+    "richNotificationThemeId": "5bfd239fbc036008b118ddc9"
+  },
+  "distribution": {
+    "startDate": "2019-01-17",
+    "times": [
+      {
+        "dayOfWeek": 4,
+        "startTime": 0,
+        "endTime": 1439
+      }
+    ],
+    "endDateSpecified": true,
+    "endDate": "2019-01-17",
+    "expirationDate": "2019-01-17"
+  },
+  "performance": {
+    "maximumBudgetSpecified": true,
+    "maximumMetricSpecified": true,
+    "type": "CPM",
+    "pricingType": "PRICED",
+    "maximumBudget": 10,
+    "maximumMetric": 100,
+    "proposedPrice": 0.1
+  },
+  "distributionNetwork": {
+    "type": "ALL",
+    "appDeliveryType": "PRECACHE",
+    "videoDeliveryType": "STREAM"
+  },
+  "enableGeoFence": false,
+  "notificationImageContentId": "5a7d9827c9e77c0001f730f0",
+  "emailDistributionList": null
+}
