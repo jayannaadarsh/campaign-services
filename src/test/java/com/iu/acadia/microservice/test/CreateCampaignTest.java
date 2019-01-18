@@ -15,6 +15,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Date;
+import java.util.UUID;
 
 
 @RunWith(SpringRunner.class)
@@ -34,12 +36,16 @@ public class CreateCampaignTest extends TestBase {
         String CreateCampaignURL =  campaignServiceHost+"/campaigns";
 
         //read from .json file
+
+        Date date = new Date();
+        String name="Call based Rich notification "+date.toString();
         ReadFile fileReader = new ReadFile();
         String payload=fileReader.read_JSON_file(fileurl);
+       String newPayload= payload.replace("Call based Rich notification",name);
 
         try {
 
-            httpUtil.proces_post_request(token, CreateCampaignURL, payload);
+            httpUtil.proces_post_request(token, CreateCampaignURL, newPayload);
 
         }
         catch (Exception e){

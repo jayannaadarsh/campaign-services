@@ -13,7 +13,7 @@ public class ReadFile {
         try {
             FileInputStream file = new FileInputStream(FilePath);
              payload = new String(Files.readAllBytes(Paths.get(FilePath)));
-            System.out.println(payload);
+            //System.out.println(payload);
         }
 
         catch(Exception e){
