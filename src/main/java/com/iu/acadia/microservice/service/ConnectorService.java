@@ -24,8 +24,9 @@ public class ConnectorService {
 
     @Value("${iu.admin.password}")
     private String password;
+    public String [] tokenOrgid=new String[2];
 
-    public String login() throws IOException {
+    public String [] login() throws IOException {
 
         /*
         Login by passing email and password and get the partial token
@@ -53,7 +54,7 @@ public class ConnectorService {
 
                 JSONObject orgObject = orgJsonArray.getJSONObject(i);
                 if(orgObject != null && orgObject.has("name") &&
-                        orgObject.getString("name").equalsIgnoreCase("IU") ) {
+                        orgObject.getString("name").equalsIgnoreCase("CLARO BR") ) {
 
                     organizationId = orgObject.getString("id");
                     break;
@@ -67,9 +68,11 @@ public class ConnectorService {
          */
         if(!StringUtils.isEmpty(organizationId)) {
             token = httpUtil.changeSessionOrganization(token, organizationId);
+            tokenOrgid[0]=token;
+            tokenOrgid[1]=organizationId;
         }
 
-        return token;
+        return tokenOrgid ;
 
     }
 

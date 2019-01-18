@@ -1,6 +1,7 @@
 package com.iu.acadia.microservice.test;
 
 import com.iu.acadia.microservice.BaseTest.TestBase;
+import com.iu.acadia.microservice.utils.SetHeaders;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -35,10 +36,11 @@ public class campaignlist extends TestBase {
             CloseableHttpClient httpClient = HttpClientBuilder.create().build();
             HttpGet get = new HttpGet(campaignlistURL);
 
-            get.setHeader("Content-type", "application/json");
-            get.setHeader("Accept", "application/json");
-            get.setHeader("token", token);
+            //Set Headers
+            SetHeaders header = new SetHeaders();
+            header.GetHeaders(get,token);
 
+            //Execute request
             HttpResponse response = httpClient.execute(get) ;
             HttpEntity responseEntity = response.getEntity();
             String responseString = EntityUtils.toString(responseEntity, "UTF-8");

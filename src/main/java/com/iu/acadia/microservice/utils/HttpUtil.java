@@ -1,7 +1,10 @@
 package com.iu.acadia.microservice.utils;
 
+import ch.qos.logback.core.net.server.Client;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
@@ -10,10 +13,14 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
+import org.json.HTTP;
 import org.json.JSONArray;
+import org.omg.CORBA.Object;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.json.JSONObject;
+
+import java.util.Objects;
 
 /**
  * Created by Vinutha on 7/12/18.
@@ -34,7 +41,6 @@ public class HttpUtil {
     private String listOrganizationsApi;
 
     private static final Logger logger = Logger.getLogger(HttpUtil.class);
-
 
     public String login(String email, String password) {
 
@@ -216,6 +222,42 @@ public class HttpUtil {
         }
 
         return newToken;
+    }
+
+
+    public void proces_post_request(String token, String URI , String payload){
+        try {
+            // String CreateCampaignURL =  "http://18.217.149.21:8080/campaigns";
+            CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+            HttpPost post = new HttpPost(URI);
+
+            //Set Headers
+            SetHeaders headers = new SetHeaders();
+            headers.PostHeaders(post, token);
+
+
+            StringEntity entity = new StringEntity(payload);
+
+            post.setEntity(entity);
+
+
+
+            CloseableHttpResponse closablehttpresponse = httpClient.execute(post);// hit the url
+
+            int statuscode= closablehttpresponse.getStatusLine().getStatusCode();
+            System.out.println(statuscode);
+
+
+            String responsestring= EntityUtils.toString(closablehttpresponse.getEntity(), "UTF-8");
+            JSONObject responseJson= new JSONObject(responsestring);
+            System.out.println(responseJson);
+
+        }
+
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

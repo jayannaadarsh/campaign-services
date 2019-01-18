@@ -25,7 +25,8 @@ public class CampaignServiceIntegrationTest {
 
         try {
 
-            String token = connector.login();
+            String [] tokenOrgid = connector.login();
+            String token= tokenOrgid[0];
 
             if(StringUtils.isEmpty(token)) {
 

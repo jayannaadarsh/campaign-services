@@ -23,6 +23,7 @@ public class TestBase {
 
     public String token;
     public String OrgId;
+
     @Autowired
     ConnectorService connector;
 
