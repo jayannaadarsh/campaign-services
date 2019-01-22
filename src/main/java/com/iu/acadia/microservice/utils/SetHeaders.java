@@ -2,6 +2,7 @@ package com.iu.acadia.microservice.utils;
 
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 
 public class SetHeaders {
 
@@ -19,6 +20,14 @@ public class SetHeaders {
         get.setHeader("Content-type", "application/json");
         get.setHeader("Accept", "application/json");
         get.setHeader("token", token);
+
+    }
+
+    public  void PutHeaders(HttpPut put, String token){
+
+        put.setHeader("Content-type", "application/json");
+        put.setHeader("Accept", "application/json");
+        put.setHeader("token", token);
 
     }
 }

@@ -20,6 +20,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -27,6 +30,8 @@ import java.util.Objects;
  */
 @Component
 public class HttpUtil {
+
+    JSONObject responseJson;
 
     @Value("${api.campaignservice.host}")
     private String campaignServiceHost;
@@ -225,7 +230,36 @@ public class HttpUtil {
     }
 
 
-    public void proces_post_request(String token, String URI , String payload){
+
+    public String set_date_and_time (String filepath){
+        //name uniqueness
+        Date date = new Date();
+        String name="Call based Rich notification "+date.toString();
+        //Start Date
+        SimpleDateFormat sdf= new SimpleDateFormat("yyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+        String startdate = sdf.format(cal.getTime());
+       // System.out.println("StartDate:"+startdate);
+
+        //End and Expiration date
+        cal.add(Calendar.DAY_OF_MONTH,7);
+        String enddate = sdf.format(cal.getTime());
+       // System.out.println(enddate);
+
+        ReadFile fileReader = new ReadFile();
+        String payload=fileReader.read_JSON_file(filepath);
+
+        //replace name
+        String name_payload= payload.replace("Call based Rich notification",name);
+        String startdate_payload = name_payload.replace("2019-01-17",startdate);
+        String enddate_payload= startdate_payload.replace("2019-01-18",enddate);
+        String final_payload=enddate_payload;
+
+        return final_payload;
+
+
+    }
+    public JSONObject proces_post_request(String token, String URI , String payload){
         try {
             // String CreateCampaignURL =  "http://18.217.149.21:8080/campaigns";
             CloseableHttpClient httpClient = HttpClientBuilder.create().build();
@@ -249,8 +283,11 @@ public class HttpUtil {
 
 
             String responsestring= EntityUtils.toString(closablehttpresponse.getEntity(), "UTF-8");
-            JSONObject responseJson= new JSONObject(responsestring);
-            System.out.println(responseJson);
+            responseJson= new JSONObject(responsestring);
+            //System.out.println(responseJson);
+
+
+
 
         }
 
@@ -258,6 +295,44 @@ public class HttpUtil {
             e.printStackTrace();
         }
 
+
+        return responseJson;
+
     }
+
+
+    public void process_put_request(String token, String URI , String payload){
+
+        try{
+            CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+            HttpPut put = new HttpPut(URI);
+
+            //Set Headers
+            SetHeaders headers = new SetHeaders();
+            headers.PutHeaders(put,token);
+
+            StringEntity entity = new StringEntity(payload);
+            put.setEntity(entity);
+
+            CloseableHttpResponse closablehttpresponse = httpClient.execute(put);
+
+           int status= closablehttpresponse.getStatusLine().getStatusCode();
+           System.out.println(status);
+
+            String responsestring= EntityUtils.toString(closablehttpresponse.getEntity(), "UTF-8");
+            responseJson= new JSONObject(responsestring);
+            System.out.println(responseJson);
+
+
+
+        }
+        catch (Exception e){
+
+        }
+
+    }
+
+
+
 
 }
